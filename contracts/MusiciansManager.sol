@@ -48,12 +48,21 @@ contract MusiciansManager {
   function addTrack(address _musicianAddress, string memory _title, uint _duration) external onlyOwner {
         // on check directement si le musician existe ( à la différence de plus haut où on check s'il existe pas déjà)
         require(bytes(Musicians[_musicianAddress]._artistName).length > 0,"ce musician n'existe pas");
-        // on check directement si le titre du musician existe pas déjà
-        require(bytes(Musicians[_musicianAddress].Track[_title].length == 0,"Existe deja");
+        // on créé la structure track pour rajouter notre nouveau titre et temps de chanson 
+        // on stock les informations rentré par le manager du contrat dans une variable 
+        Track memory thisTrack = Track(_title, _duration);
+        // on ajoute 
+        Musicians[_musicianAddress]._tracks.push(thisTrack);
+        // ** ci-dessous faux mais à tester **
         // on ajoute le nom de la musique en suivant la structure 
-        Musicians[_musicianAddress].Track[_title] = _title;
-        Musicians[_musicianAddress].Track[_duration] = _duration;
+        // Musicians[_musicianAddress].Track[_title] = _title;
+        // Musicians[_musicianAddress].Track[_duration] = _duration;
         // on emet l'event comme quoi on a ajouté une musique à un musician 
-        emit trackAdded(string _artistName, string _title)
+        emit trackAdded(Musicians[_musicianAddress]._artistName, _title);
+  }
+
+    // ici on emet just un event qui va lire selon l'address du musician les tracks qu'il possede
+  function getTracks (address _musicianAddress) external {
+    emit getTheTracks(Musicians[_musicianAddress]._tracks);
   }
 }
