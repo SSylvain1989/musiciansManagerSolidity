@@ -53,10 +53,6 @@ contract MusiciansManager {
         Track memory thisTrack = Track(_title, _duration);
         // on ajoute 
         Musicians[_musicianAddress]._tracks.push(thisTrack);
-        // ** ci-dessous faux mais à tester **
-        // on ajoute le nom de la musique en suivant la structure 
-        // Musicians[_musicianAddress].Track[_title] = _title;
-        // Musicians[_musicianAddress].Track[_duration] = _duration;
         // on emet l'event comme quoi on a ajouté une musique à un musician 
         emit trackAdded(Musicians[_musicianAddress]._artistName, _title);
   }
